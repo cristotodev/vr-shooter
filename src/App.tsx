@@ -8,6 +8,7 @@ import { Target } from "./components/Target";
 import gsap from "gsap";
 import { Score } from "./components/score";
 import { AsteroidField } from "./components/AteroidField";
+import { CountDownTime } from "./components/CountdownTimer";
 
 const GsapTicker = () => {
   useFrame(() => {
@@ -70,6 +71,7 @@ const App = () => {
           <Target targetIdx={2} />
           <Score />
           <AsteroidField />
+          <CountDownTime initialTime={15} />
 
           <GsapTicker />
         </XR>
