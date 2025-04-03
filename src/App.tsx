@@ -1,13 +1,12 @@
 import { Environment, Gltf, PerspectiveCamera, Stars } from "@react-three/drei";
 import { XR, createXRStore } from "@react-three/xr";
-
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Gun } from "./components/Gun";
 import { Bulllets } from "./components/Bullets";
 import { Target } from "./components/Target";
 import gsap from "gsap";
 import { Score } from "./components/score";
-import { AsteroidField } from "./components/AteroidField";
+import { AsteroidField } from "./components/AsteroidField";
 import { CountDownTime } from "./components/CountdownTimer";
 
 const GsapTicker = () => {
