@@ -3,10 +3,10 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Mesh, Quaternion, Vector3 } from "three";
 import { create } from "zustand";
-import { targets } from "./targets";
-import { useScoreStore } from "./score";
+import { targets } from "./Target";
 import gsap from "gsap";
 import { generateUUID } from "three/src/math/MathUtils.js";
+import { useScoreStore } from "./score";
 
 type BulletData = {
     id: string;

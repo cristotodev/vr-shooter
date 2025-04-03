@@ -1,12 +1,13 @@
-import { Environment, Gltf, PerspectiveCamera } from "@react-three/drei";
+import { Environment, Gltf, PerspectiveCamera, Stars } from "@react-three/drei";
 import { XR, createXRStore } from "@react-three/xr";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Gun } from "./gun";
-import { Bulllets } from "./bullet";
-import { Target } from "./targets";
-import { Score } from "./score";
+import { Gun } from "./components/Gun";
+import { Bulllets } from "./components/Bullets";
+import { Target } from "./components/Target";
 import gsap from "gsap";
+import { Score } from "./components/score";
+import { AsteroidField } from "./components/AteroidField";
 
 const GsapTicker = () => {
   useFrame(() => {
@@ -37,8 +38,10 @@ const xrStore = createXRStore({
   },
   controller: {
     right: Gun,
-    left: Gun
-  }
+    left: Gun,
+    teleportPointer: true
+  },
+
 });
 
 const App = () => {
@@ -51,43 +54,27 @@ const App = () => {
           height: "100vh",
         }}
       >
-        <color args={[0x808080]} attach={"background"}></color>
-        <PerspectiveCamera makeDefault position={[0, 1.6, 2]} fov={75} />
-        <Environment preset="warehouse" />
-        <Bulllets />
-        <Gltf src="spacestation.glb" />
-        <Target targetIdx={0} />
-        <Target targetIdx={1} />
-        <Target targetIdx={2} />
-        <Score />
-        <GsapTicker />
-        <XR store={xrStore}></XR>
+
+        <XR store={xrStore}>
+          <color args={[0x000000]} attach={"background"}></color>
+          <Stars radius={100} depth={50} count={5000} factor={4} fade />
+          
+
+          <PerspectiveCamera makeDefault position={[0, 1.6, 2]} fov={75} />
+          <Environment preset="warehouse" />
+          <Gltf src="spacestation.glb" />
+
+          <Bulllets />
+          <Target targetIdx={0} />
+          <Target targetIdx={1} />
+          <Target targetIdx={2} />
+          <Score />
+          <AsteroidField />
+
+          <GsapTicker />
+        </XR>
       </Canvas>
-      <div
-        style={{
-          position: "fixed",
-          display: "flex",
-          width: "100vw",
-          height: "100vh",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "center",
-          color: "white",
-        }}
-      >
-        <button
-          onClick={() => xrStore.enterVR()}
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            fontSize: "20px",
-          }}
-        >
-          Enter VR
-        </button>
-      </div>
+      
     </>
   );
 };

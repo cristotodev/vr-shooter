@@ -3,7 +3,7 @@ import {
   useXRControllerButtonEvent,
   useXRInputSourceStateContext,
 } from "@react-three/xr";
-import { useBulletStore } from "./bullet";
+import { useBulletStore } from "./Bullets";
 import { PositionalAudio, useGLTF } from "@react-three/drei";
 import { useMemo, useRef } from "react";
 
