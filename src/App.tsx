@@ -7,7 +7,8 @@ import { Target } from "./components/Target";
 import gsap from "gsap";
 import { Score } from "./components/score";
 import { AsteroidField } from "./components/AsteroidField";
-import { CountDownTime } from "./components/CountdownTimer";
+import { CountDownTimer } from "./components/CountdownTimer";
+import { AmbientMusic } from "./components/AmbientMusic";
 
 const GsapTicker = () => {
   useFrame(() => {
@@ -41,7 +42,7 @@ const xrStore = createXRStore({
     left: Gun,
     teleportPointer: true
   },
-
+  
 });
 
 const App = () => {
@@ -70,7 +71,8 @@ const App = () => {
           <Target targetIdx={2} />
           <Score />
           <AsteroidField />
-          <CountDownTime initialTime={15} />
+          <CountDownTimer initialTime={25} />
+          <AmbientMusic />
 
           <GsapTicker />
         </XR>

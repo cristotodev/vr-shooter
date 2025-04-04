@@ -41,7 +41,7 @@ export const Score = () => {
             quaternion={[-0.4582265217274104, 0, 0, 0.8888354486549235]}
         >
             {formatScoreText(score)}
-            <PositionalAudio ref={soundRef} url="score.ogg" loop={false}/>
+            <PositionalAudio ref={soundRef} url="sounds/score.ogg" loop={false}/>
         </Text>
     );
 };

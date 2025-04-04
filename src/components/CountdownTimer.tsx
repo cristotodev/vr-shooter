@@ -1,13 +1,45 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Text } from "@react-three/drei";
 import { Mesh, Vector3 } from "three";
+import { useXR } from "@react-three/xr";
 
-export const CountDownTime = ({ initialTime = 60 }) => {
+export const CountDownTimer = ({ initialTime = 60 }) => {
+    const { session } = useXR();
     const [timeLeft, setTimeLeft] = useState(initialTime);
     const textRef = useRef<Mesh>(null);
-
     const { camera } = useThree();
+
+    const vibrateControllers = useCallback(async (intensity: number, duration: number) => {
+        if (!session) return
+
+        try {
+            await Promise.all(
+                Array.from(session.inputSources).map(async (inputSource) => {
+                    console.log(inputSource.gamepad?.hapticActuators)
+                    if (inputSource.gamepad?.hapticActuators?.[0]) {
+                        await inputSource.gamepad.hapticActuators[0].pulse(intensity, duration)
+                    }
+                }
+                ));
+        } catch (error) {
+            console.warn('Error al vibrar mandos:', error)
+        }
+    }, [session])
+
+    useEffect(() => {
+        if (timeLeft <= 10 && timeLeft > 0) {
+            const intensity = 0.3 + ((10 - timeLeft) * 0.07)
+            const duration = 100 + ((10 - timeLeft) * 30)
+
+            vibrateControllers(intensity, duration)
+        }
+
+        if (timeLeft === 0) {
+            vibrateControllers(0.9, 800)
+        }
+    }, [timeLeft, vibrateControllers])
+
     useFrame(() => {
         if (textRef.current) {
             textRef.current.position.copy(camera.position).add(camera.getWorldDirection(new Vector3(0, 0, -1)).add(new Vector3(0, 0.6, 0)));

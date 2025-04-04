@@ -41,7 +41,7 @@ export const Gun = () => {
   return (
     <>
         <primitive object={clonedScene} />
-        <PositionalAudio ref={soundRef} url="laser.ogg" loop={false}/>
+        <PositionalAudio ref={soundRef} url="sounds/laser.ogg" loop={false}/>
     </>
   );
 };
